@@ -1,5 +1,4 @@
 ﻿using AddHandSlot.Blueprint;
-using AddHandSlot.Line;
 using HarmonyLib;
 
 namespace AddHandSlot.Patcher;
@@ -17,6 +16,6 @@ public static class BlueprintModelsScreenPatch
     [HarmonyPostfix, HarmonyPatch("Show")]
     public static void Show_Postfix()
     {
-        BlueprintTabCtrl.Instance.OnShow();
+        BlueprintTabCtrl.Instance?.OnShow();
     }
 }

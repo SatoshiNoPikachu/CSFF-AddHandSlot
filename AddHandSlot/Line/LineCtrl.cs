@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using AddHandSlot.Blueprint;
 using AddHandSlot.Stat;
@@ -47,12 +46,17 @@ public class LineCtrl
         var config = ConfigManager.Get<int>("Config", "AddHandSlotNum");
         if (config is null) return;
 
-        var ctrl = new StatCtrl(StatCtrl.UidHandSlotNum);
-        if (ctrl.InGame is not null) ctrl.InGame.CurrentBaseValue = 6 + config.Value;
+        var ctrl = new StatCtrl(StatCtrl.UidHandSlotNum)
+        {
+            InGame =
+            {
+                CurrentBaseValue = 6 + config.Value
+            }
+        };
 
         ModifyHandSlotNum(6 + config.Value);
 
-        ConfigManager.Get<bool>("Config", "ForceAddHandSlot").Value = false;
+        ConfigManager.Get<bool>("Config", "ForceAddHandSlot")!.Value = false;
     }
 
     public static void OnExplorationPopupSetup(ExplorationPopup popup)
@@ -175,7 +179,7 @@ public class LineCtrl
         {
             [LineStatus.Initial] = new(trans),
             [LineStatus.ScaleDown] = new(trans, 0.7f, 0.7f, 600f, null),
-            [LineStatus.DoubleLine] = new(trans, 0.5f, 0.5f, 1400f, 400f),
+            [LineStatus.DoubleLine] = new(trans, 0.68f, 0.68f, 650f, 395f),
         });
 
         // 探索

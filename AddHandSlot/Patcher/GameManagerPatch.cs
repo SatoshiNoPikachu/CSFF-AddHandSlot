@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using AddHandSlot.Line;
+﻿using AddHandSlot.Line;
 using AddHandSlot.ScrollView;
 using AddHandSlot.Stat;
 using HarmonyLib;

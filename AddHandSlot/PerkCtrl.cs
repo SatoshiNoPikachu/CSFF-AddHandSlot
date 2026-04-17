@@ -10,9 +10,8 @@ public class PerkCtrl
         if (config is null) return;
 
         var ctrl = new PerkCtrl("AddHandSlot-Pk_AddHandSlot");
-        if (ctrl.Perk is null) return;
 
-        ctrl.Perk.StartingStatModifiers[0].ValueModifier = new Vector2(config.Value, config.Value);
+        ctrl.Perk?.StartingStatModifiers[0].ValueModifier = new Vector2(config.Value, config.Value);
     }
 
     public static void ModifyAddEncumbranceLimitNum()
@@ -21,9 +20,8 @@ public class PerkCtrl
         if (config is null) return;
 
         var ctrl = new PerkCtrl("AddHandSlot-Pk_AddEncumbranceLimit");
-        if (ctrl.Perk is null) return;
 
-        ctrl.Perk.StartingStatModifiers[0].ValueModifier = new Vector2(config.Value, config.Value);
+        ctrl.Perk?.StartingStatModifiers[0].ValueModifier = new Vector2(config.Value, config.Value);
     }
 
     public CharacterPerk Perk { get; private set; }

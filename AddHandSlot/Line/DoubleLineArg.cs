@@ -2,16 +2,9 @@
 
 namespace AddHandSlot.Line;
 
-public struct DoubleLineArg
+public struct DoubleLineArg(int offset, Vector2 padding, Vector2 margin)
 {
-    public int Offset;
-    public Vector2 Padding;
-    public Vector2 Margin;
-
-    public DoubleLineArg(int offset, Vector2 padding, Vector2 margin)
-    {
-        Offset = offset;
-        Padding = padding;
-        Margin = margin;
-    }
+    public int Offset = offset;
+    public Vector2 Padding = padding;
+    public Vector2 Margin = margin;
 }
