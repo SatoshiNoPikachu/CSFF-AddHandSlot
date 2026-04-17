@@ -31,7 +31,7 @@ public class LockedBlueprintCtrl : MBSingleton<LockedBlueprintCtrl>
 
         _image = transform.GetComponent<RectTransform>("Image");
         _scaleInitial = new ScaleCtrl(null, null, _image);
-        _scaleDouble = new ScaleCtrl(null, 685, _image);
+        _scaleDouble = new ScaleCtrl(null, 716, _image);
 
         var ctrl = LineCtrl.GetCtrl(LineType.Blueprint);
         if (ctrl is not null) OnLineStatusChange(ctrl.Status);
@@ -44,13 +44,13 @@ public class LockedBlueprintCtrl : MBSingleton<LockedBlueprintCtrl>
         if (status is LineStatus.DoubleLine)
         {
             _gridLayoutGroup.constraintCount = 2;
-            _gridLayoutGroup.padding.top = 40;
+            _gridLayoutGroup.padding.top = 81;
             _scaleDouble.ApplySize(_image);
         }
         else
         {
             _gridLayoutGroup.constraintCount = 1;
-            _gridLayoutGroup.padding.top = 36;
+            _gridLayoutGroup.padding.top = 78;
             _scaleInitial.ApplySize(_image);
         }
     }

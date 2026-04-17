@@ -34,12 +34,11 @@ internal abstract class ConfigManager : ConfigBase<Plugin>
         Config.Bind("SlotScale", "EnableInventory", true, "修改容器槽位的尺寸");
         Config.Bind("SlotScale", "EnableEquipment", true, "修改装备槽位的尺寸");
 
-        Config.Bind("StatScale", "EnableBar", true, "修改状态栏的尺寸").SettingChanged += (_, _) => StatBarCtrl.UpdateStatus();
+        // Config.Bind("StatScale", "EnableBar", true, "修改状态栏的尺寸").SettingChanged += (_, _) => StatBarCtrl.UpdateStatus();
 
-        Config.Bind("Special", "EnableInventoryDynamicDoubleLine", true,
-            "容器动态双行槽位（仅当启用双行容器槽位生效，启用后仅当容器槽位数量大于8时才会按双行显示）");
-        Config.Bind("Special", "EnableStatusBarElongate", true, "状态条延长（仅当启用修改状态栏的尺寸时生效）").SettingChanged +=
-            (_, _) => StatBarCtrl.UpdateStatusBar();
+        Config.Bind("Special", "EnableInventoryDynamicDoubleLine", true, "容器动态双行槽位（启用后仅当容器槽位数量大于8时才会按双行显示）");
+        // Config.Bind("Special", "EnableStatusBarElongate", true, "状态条延长（仅当启用修改状态栏的尺寸时生效）").SettingChanged +=
+        //     (_, _) => StatBarCtrl.UpdateStatusBar();
 
         foreach (var (def, entry) in Config)
         {

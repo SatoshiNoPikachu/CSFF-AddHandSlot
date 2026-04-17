@@ -20,7 +20,7 @@ public class BlueprintTabCtrl : MBSingleton<BlueprintTabCtrl>
         btn.name = "NextTabButton";
         btn.Text = "→";
         btn.OnClick = ctrl.NextTabPage;
-        new PosCtrl(btn.transform, 1385).Apply(btn.transform);
+        new PosCtrl(btn.transform, 1406).Apply(btn.transform);
     }
 
     private BlueprintModelsScreen _screen;

@@ -9,10 +9,8 @@ public class StatCtrl(string uid)
 
     public static void OnStatValueChange(InGameStat stat)
     {
-        if (!stat) return;
-
-        var model = stat.StatModel;
-        if (!model) return;
+        var model = stat?.StatModel;
+        if (model is null) return;
 
         var curValue = (int)stat.CurrentValue(GameManager.Instance.NotInBase);
 
@@ -51,7 +49,7 @@ public class StatCtrl(string uid)
     {
         var ctrl = new StatCtrl("AddHandSlot-EncumbranceLimitNum");
         if (!ctrl.InGame) return;
-        
+
         ModifyEncumbranceLimit((int)ctrl.InGame.CurrentValue(GameManager.Instance.NotInBase));
     }
 
@@ -69,10 +67,10 @@ public class StatCtrl(string uid)
 
         stat.MinMaxValue.y = num;
         stat.VisibleValueRange.y = num;
-        stat.Statuses[0].ValueRange = new Vector2Int((int)(num * 0.5) + 1, (int)(num * 0.75));
-        stat.Statuses[1].ValueRange = new Vector2Int((int)(num * 0.75) + 1, (int)(num * 0.875));
-        stat.Statuses[2].ValueRange = new Vector2Int((int)(num * 0.875) + 1, num - 1);
-        stat.Statuses[3].ValueRange = new Vector2Int(num, num);
+        // stat.Statuses[0].ValueRange = new Vector2Int((int)(num * 0.5) + 1, (int)(num * 0.75));
+        // stat.Statuses[1].ValueRange = new Vector2Int((int)(num * 0.75) + 1, (int)(num * 0.875));
+        // stat.Statuses[2].ValueRange = new Vector2Int((int)(num * 0.875) + 1, num - 1);
+        // stat.Statuses[3].ValueRange = new Vector2Int(num, num);
 
         foreach (var status in map)
         {
@@ -80,7 +78,8 @@ public class StatCtrl(string uid)
         }
 
         if (ctrl.InGame is null) return;
-        GameManager.Instance.StartCoroutine(GameManager.Instance.UpdateStatStatuses(ctrl.InGame, -1, null));
+        GameManager.Instance.StartCoroutine(
+            GameManager.Instance.UpdateStatStatuses(ctrl.InGame, -1, new Vector2(-1, -1), null));
     }
 
     public GameStat Stat { get; } = UniqueIDScriptable.GetFromID<GameStat>(uid);

@@ -11,14 +11,14 @@ public static class GraphicsManagerPatch
     public static void Init_Prefix(GraphicsManager __instance)
     {
         LineCtrl.Init();
-        StatBarCtrl.Init();
+        // StatBarCtrl.Init();
 
         foreach (var ctrl in LineCtrl.GetLines())
         {
             ctrl.CheckStatus();
         }
 
-        StatBarCtrl.UpdateStatus();
+        // StatBarCtrl.UpdateStatus();
     }
 
     [HarmonyPostfix, HarmonyPatch("Init")]
@@ -30,21 +30,20 @@ public static class GraphicsManagerPatch
         var ctrl = LineCtrl.GetCtrl(LineType.Hand);
         if (ctrl is null) return;
 
-        var data = GameLoad.Instance.Games[GameLoad.Instance.CurrentGameDataIndex].MainData;
+        var data = GameLoad.Instance.Games[GameLoad.Instance.CurrentGameDataIndex].LatestData;
 
-        if (!data.StatsDict.TryGetValue(StatCtrl.UidHandSlotNum,
-                out var statSaveData)) return;
+        if (!data.StatsDict.TryGetValue(StatCtrl.UidHandSlotNum, out var statSaveData)) return;
 
         var num = (int)statSaveData.BaseValue;
         if (num <= 6) return;
         ctrl.SetSlotNum(num);
     }
 
-    [HarmonyPostfix, HarmonyPatch("UpdateSlotsVisibility")]
-    public static void UpdateSlotsVisibility_Postfix()
-    {
-        var ctrl = new StatCtrl(StatCtrl.UidHandSlotNum);
-        if (ctrl.InGame is null) return;
-        if (ctrl.InGame.SimpleCurrentValue == 0) LineCtrl.ModifyHandSlotNum(0);
-    }
+    // [HarmonyPostfix, HarmonyPatch("UpdateSlotsVisibility")]
+    // public static void UpdateSlotsVisibility_Postfix()
+    // {
+    //     var ctrl = new StatCtrl(StatCtrl.UidHandSlotNum);
+    //     if (ctrl.InGame is null) return;
+    //     if (ctrl.InGame.SimpleCurrentValue == 0) LineCtrl.ModifyHandSlotNum(0);
+    // }
 }

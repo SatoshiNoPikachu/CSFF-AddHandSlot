@@ -59,25 +59,25 @@ public class LineCtrl
         ConfigManager.Get<bool>("Config", "ForceAddHandSlot")!.Value = false;
     }
 
-    public static void OnExplorationPopupSetup(ExplorationPopup popup)
-    {
-        var ab = ActionBehaviour.Create(popup);
-        var tag = false;
-        ab.OnUpdateAction = () =>
-        {
-            if (tag) return;
-            ModifyExplorationSlotNum();
-            tag = true;
-            ab.Destroy();
-        };
-    }
-
-    public static void ModifyExplorationSlotNum()
-    {
-        var ctrl = GetCtrl(LineType.Exploration);
-        if (ctrl is null) return;
-        ModifyExplorationSlotNum(ctrl.GetSlotNum());
-    }
+    // public static void OnExplorationPopupSetup(ExplorationPopup popup)
+    // {
+    //     var ab = ActionBehaviour.Create(popup);
+    //     var tag = false;
+    //     ab.OnUpdateAction = () =>
+    //     {
+    //         if (tag) return;
+    //         ModifyExplorationSlotNum();
+    //         tag = true;
+    //         ab.Destroy();
+    //     };
+    // }
+    //
+    // public static void ModifyExplorationSlotNum()
+    // {
+    //     var ctrl = GetCtrl(LineType.Exploration);
+    //     if (ctrl is null) return;
+    //     ModifyExplorationSlotNum(ctrl.GetSlotNum());
+    // }
 
     public static void ModifyExplorationSlotNum(int num)
     {
@@ -157,7 +157,7 @@ public class LineCtrl
         {
             [LineStatus.Initial] = new(trans),
             [LineStatus.ScaleDown] = new(trans, 0.7f, 0.7f, 620f, null),
-            [LineStatus.DoubleLine] = new(trans, 0.5f, 0.5f, 1460f, 360f),
+            [LineStatus.DoubleLine] = new(trans, 0.6f, 0.6f, 985f, 360f),
         });
 
         // 容器
@@ -167,8 +167,8 @@ public class LineCtrl
         ], trans => new Dictionary<LineStatus, ScaleCtrl>
         {
             [LineStatus.Initial] = new(trans),
-            [LineStatus.ScaleDown] = new(trans, 0.7f, 0.7f, 500f, 0f),
-            [LineStatus.DoubleLine] = new(trans, 0.5f, 0.5f, 1175f, 360f),
+            [LineStatus.ScaleDown] = new(trans, 0.71f, 0.71f, 407f, 0f),
+            [LineStatus.DoubleLine] = new(trans, 0.55f, 0.55f, 825f, 360f),
         });
 
         // 装备
@@ -179,33 +179,33 @@ public class LineCtrl
         {
             [LineStatus.Initial] = new(trans),
             [LineStatus.ScaleDown] = new(trans, 0.7f, 0.7f, 600f, null),
-            [LineStatus.DoubleLine] = new(trans, 0.68f, 0.68f, 650f, 395f),
+            [LineStatus.DoubleLine] = new(trans, 0.75f, 0.75f, 500f, 400f),
         });
 
-        // 探索
-        LineDelegates[LineType.Exploration] = (line =>
-        [
-            (RectTransform)line.transform.parent
-        ], trans => new Dictionary<LineStatus, ScaleCtrl>
-        {
-            [LineStatus.Initial] = new(trans),
-            [LineStatus.ScaleDown] = new(trans, 0.7f, 0.7f, 1800f, null),
-            [LineStatus.DoubleLine] = new(trans, 0.5f, 0.5f, 2500f, 360f),
-        });
+        // // 探索
+        // LineDelegates[LineType.Exploration] = (line =>
+        // [
+        //     (RectTransform)line.transform.parent
+        // ], trans => new Dictionary<LineStatus, ScaleCtrl>
+        // {
+        //     [LineStatus.Initial] = new(trans),
+        //     [LineStatus.ScaleDown] = new(trans, 0.7f, 0.7f, 1800f, null),
+        //     [LineStatus.DoubleLine] = new(trans, 0.5f, 0.5f, 2500f, 360f),
+        // });
 
         DoubleArgs[LineType.Base] = new DoubleLineArg(2, new Vector2(0f, -325f), new Vector2(50f, 360f));
 
         DoubleArgs[LineType.Blueprint] = new DoubleLineArg(1, new Vector2(0f, -325f), new Vector2(0f, 170f));
 
-        DoubleArgs[LineType.Equipment] = new DoubleLineArg(1, new Vector2(0f, -325f), new Vector2(0f, -45f));
+        DoubleArgs[LineType.Equipment] = new DoubleLineArg(1, new Vector2(0f, -335f), new Vector2(0f, -77f));
 
         DoubleArgs[LineType.Hand] = new DoubleLineArg(2, new Vector2(0f, -325f), new Vector2(55f, 162.5f));
 
-        DoubleArgs[LineType.Inventory] = new DoubleLineArg(1, new Vector2(0f, -325f), new Vector2(0f, 170f));
+        DoubleArgs[LineType.Inventory] = new DoubleLineArg(1, new Vector2(0f, -330f), new Vector2(0f, 170f));
 
         DoubleArgs[LineType.Location] = new DoubleLineArg(1, new Vector2(0f, -325f), new Vector2(0f, 180f));
 
-        DoubleArgs[LineType.Exploration] = new DoubleLineArg(2, new Vector2(0f, -325f), new Vector2(55f, 162f));
+        // DoubleArgs[LineType.Exploration] = new DoubleLineArg(2, new Vector2(0f, -325f), new Vector2(55f, 162f));
     }
 
     /// <summary>
@@ -224,8 +224,8 @@ public class LineCtrl
         Lines[LineType.Inventory] =
             new LineCtrl(LineType.Inventory, graphics.InventoryInspectionPopup.InventorySlotsLine);
         Lines[LineType.Equipment] = new LineCtrl(LineType.Equipment, graphics.CharacterWindow.EquipmentSlotsLine);
-        Lines[LineType.Exploration] =
-            new LineCtrl(LineType.Exploration, graphics.ExplorationDeckPopup.ExplorationSlotsLine, false);
+        // Lines[LineType.Exploration] =
+        //     new LineCtrl(LineType.Exploration, graphics.ExplorationDeckPopup.ExplorationSlotsLine, false);
     }
 
     /// <summary>
@@ -283,10 +283,10 @@ public class LineCtrl
             return LineType.Equipment;
         }
 
-        if (line == graphics.ExplorationDeckPopup.ExplorationSlotsLine)
-        {
-            return LineType.Exploration;
-        }
+        // if (line == graphics.ExplorationDeckPopup.ExplorationSlotsLine)
+        // {
+        //     return LineType.Exploration;
+        // }
 
         return null;
     }
@@ -498,7 +498,7 @@ public class LineCtrl
     {
         if (_type == LineType.Inventory && ConfigManager.IsEnable("Special", "EnableInventoryDynamicDoubleLine"))
         {
-            return _line.Count - _line.InactiveElements > 8;
+            return _line.Count - _line.InactiveElements > 7;
         }
 
         return ConfigManager.IsEnable("DoubleLine", $"Enable{Enum.GetName(typeof(LineType), _type)}");
