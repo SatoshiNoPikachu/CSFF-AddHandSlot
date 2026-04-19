@@ -1,110 +1,82 @@
 ﻿using AddHandSlot.Line;
+using ModCore.Games;
+using ModCore.Games.Extensions;
 using UnityEngine;
 
 namespace AddHandSlot.Stat;
 
 public class StatCtrl(string uid)
 {
-    public const string UidHandSlotNum = "AddHandSlot-HandSlotNum";
+    public const string UidHandSlotNum = "AddHandSlot:HandSlotNum";
 
-    public static void OnStatValueChange(InGameStat stat)
+    public const string UidEncumbranceLimitNum = "AddHandSlot:EncumbranceLimitNum";
+
+    static StatCtrl()
     {
+        Game.DestroyEvent += () => _forced = false;
+    }
+
+    private static bool _forced;
+
+    public static void OnStatValueChange(InGameStat stat, float change)
+    {
+        if (change is 0) return;
+
         var model = stat?.StatModel;
         if (model is null) return;
 
-        var curValue = (int)stat.CurrentValue(GameManager.Instance.NotInBase);
+        var curValue = (int)stat.CurrentValue(Game.Gm);
 
-        if (model.UniqueID == UidHandSlotNum)
+        switch (model.UniqueID)
         {
-            LineCtrl.ModifyHandSlotNum(curValue);
-            return;
+            case UidHandSlotNum:
+                LineCtrl.ModifyHandSlotNum(curValue);
+                break;
+            case UidEncumbranceLimitNum:
+                if (_forced) ModifyEncumbranceLimit(change);
+                break;
         }
-
-        if (model.UniqueID != "AddHandSlot-EncumbranceLimitNum") return;
-
-        ModifyEncumbranceLimit(curValue);
     }
+
+    internal static void Forced() => _forced = true;
 
     /// <summary>
     /// 修改负重上限
     /// </summary>
-    public static void ForceModifyEncumbranceLimit()
+    public static void ForceModifyEncumbranceLimit(bool flag = false)
     {
-        if (GameManager.Instance is null) return;
-        if (!ConfigManager.IsEnable("Config", "ForceModifyEncumbrance")) return;
+        var stat = new StatCtrl(UidEncumbranceLimitNum).InGame;
+        if (stat is null) return;
 
-        var config = ConfigManager.Get<int>("Config", "AddEncumbranceNum");
-        if (config is null) return;
+        if (ConfigManager.IsEnable("Config", "ForceModifyEncumbrance"))
+        {
+            var config = ConfigManager.Get<int>("Config", "AddEncumbranceNum");
+            if (config is null) return;
 
-        var ctrl = new StatCtrl("AddHandSlot-EncumbranceLimitNum");
-        if (!ctrl.InGame) return;
+            var value = config.Value;
+            var change = value - (_forced ? stat.CurrentBaseValue : 0);
+            if (change is not 0)
+            {
+                stat.CurrentBaseValue = value;
+                ModifyEncumbranceLimit(change);
+            }
 
-        ctrl.InGame.CurrentBaseValue = 4000 + config.Value;
-        ModifyEncumbranceLimit((int)ctrl.InGame.CurrentValue(GameManager.Instance.NotInBase));
-
-        ConfigManager.Get<bool>("Config", "ForceModifyEncumbrance")!.Value = false;
-    }
-
-    public static void ModifyEncumbranceLimit()
-    {
-        var ctrl = new StatCtrl("AddHandSlot-EncumbranceLimitNum");
-        if (!ctrl.InGame) return;
-
-        ModifyEncumbranceLimit((int)ctrl.InGame.CurrentValue(GameManager.Instance.NotInBase));
+            ConfigManager.Get<bool>("Config", "ForceModifyEncumbrance")!.Value = false;
+        }
+        else if (flag) ModifyEncumbranceLimit(stat.CurrentBaseValue);
     }
 
     /// <summary>
     /// 修改负重上限
     /// </summary>
     /// <param name="num">上限值</param>
-    private static void ModifyEncumbranceLimit(int num)
+    private static void ModifyEncumbranceLimit(float num)
     {
-        var ctrl = new StatCtrl("21574a6120f4d3c4b913c69987e2ff06");
-        if (ctrl.Stat?.Statuses?.Length is null or not 4) return;
-
-        var stat = ctrl.Stat;
-        var map = ctrl.GetStatusesMap();
-
-        stat.MinMaxValue.y = num;
-        stat.VisibleValueRange.y = num;
-        // stat.Statuses[0].ValueRange = new Vector2Int((int)(num * 0.5) + 1, (int)(num * 0.75));
-        // stat.Statuses[1].ValueRange = new Vector2Int((int)(num * 0.75) + 1, (int)(num * 0.875));
-        // stat.Statuses[2].ValueRange = new Vector2Int((int)(num * 0.875) + 1, num - 1);
-        // stat.Statuses[3].ValueRange = new Vector2Int(num, num);
-
-        foreach (var status in map)
-        {
-            status.Key.ValueRange = status.Value.ValueRange;
-        }
-
-        if (ctrl.InGame is null) return;
-        GameManager.Instance.StartCoroutine(
-            GameManager.Instance.UpdateStatStatuses(ctrl.InGame, -1, new Vector2(-1, -1), null));
+        var gm = Game.Gm;
+        gm.StartCoroutine(gm.ChangeStatMinMaxValues(gm.InGamePlayerWeight, new Vector2(0, num)));
     }
 
     public GameStat Stat { get; } = UniqueIDScriptable.GetFromID<GameStat>(uid);
 
-    public InGameStat InGame =>
-        GameManager.Instance is not null && Stat is not null &&
-        GameManager.Instance.StatsDict.TryGetValue(Stat, out var stat)
-            ? stat
-            : null;
-
-    public Dictionary<StatStatus, StatStatus> GetStatusesMap()
-    {
-        var map = new Dictionary<StatStatus, StatStatus>();
-        if (InGame is null) return map;
-
-        foreach (var current in InGame.CurrentStatuses)
-        {
-            foreach (var status in Stat.Statuses)
-            {
-                if (!current.IsSameStatus(status)) continue;
-                map[current] = status;
-                break;
-            }
-        }
-
-        return map;
-    }
+    public InGameStat InGame => GameManager.Instance is not null && Stat is not null ? Stat.InGame : null;
 }

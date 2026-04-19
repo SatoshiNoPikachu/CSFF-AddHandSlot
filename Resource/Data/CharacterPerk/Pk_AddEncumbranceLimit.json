@@ -2,11 +2,13 @@
     "ActionModifiers": [],
     "ActionObjectives": [],
     "AddedCards": [],
+    "AddedPlayerTags": [],
     "AddedStartingHours": 0,
     "CardsOnBoardObjectives": [],
     "CheckingNotificationDetails": 0,
     "CompleteOnLose": false,
     "CompleteOnWin": false,
+    "DebugCompletion": false,
     "DifficultyRating": -10000,
     "DisplayPriority": 1000.0,
     "EditorOnly": false,
@@ -35,7 +37,7 @@
         "m_FileID": 0,
         "m_PathID": 0
     },
-    "PerkIconWarpData": "Weight",
+    "PerkIconWarpData": "Weight_Old",
     "PerkIconWarpType": 3,
     "PerkName": {
         "DefaultText": "Add Encumbrance Limit",
@@ -53,12 +55,27 @@
         "y": 0
     },
     "ResetLockInEditor": false,
+    "StarsCost": 0,
     "StartUnlocked": true,
     "StartingStatModifiers": [
         {
             "ApplyEachTick": false,
+            "CannotModifyBeyond": {
+                "Active": false,
+                "FloatValue": 0.0,
+                "MaxValue": 0.0
+            },
+            "IgnoreNovelty": false,
             "InstantModifier": false,
             "IsInverse": false,
+            "MaxValueModifier": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "MinValueModifier": {
+                "x": 0.0,
+                "y": 0.0
+            },
             "RateModifier": {
                 "x": 0.0,
                 "y": 0.0
@@ -67,7 +84,7 @@
                 "m_FileID": 0,
                 "m_PathID": 0
             },
-            "StatWarpData": "AddHandSlot-EncumbranceLimitNum",
+            "StatWarpData": "AddHandSlot:EncumbranceLimitNum",
             "StatWarpType": 3,
             "ValueModifier": {
                 "x": 6000.0,
@@ -79,5 +96,5 @@
     "SunsCost": 0,
     "TagsOnBoardObjectives": [],
     "TimeObjectives": [],
-    "UniqueID": "AddHandSlot-Pk_AddEncumbranceLimit"
+    "UniqueID": "AddHandSlot:Pk_AddEncumbranceLimit"
 }

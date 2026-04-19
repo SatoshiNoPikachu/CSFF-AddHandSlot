@@ -2,14 +2,14 @@
 
 namespace AddHandSlot;
 
-public class PerkCtrl
+public class PerkCtrl(string uid)
 {
     public static void ModifyAddHandSlotPerkNum()
     {
         var config = ConfigManager.Get<int>("Config", "AddHandSlotNum");
         if (config is null) return;
 
-        var ctrl = new PerkCtrl("AddHandSlot-Pk_AddHandSlot");
+        var ctrl = new PerkCtrl("AddHandSlot:Pk_AddHandSlot");
 
         ctrl.Perk?.StartingStatModifiers[0].ValueModifier = new Vector2(config.Value, config.Value);
     }
@@ -19,15 +19,10 @@ public class PerkCtrl
         var config = ConfigManager.Get<int>("Config", "AddEncumbranceNum");
         if (config is null) return;
 
-        var ctrl = new PerkCtrl("AddHandSlot-Pk_AddEncumbranceLimit");
+        var ctrl = new PerkCtrl("AddHandSlot:Pk_AddEncumbranceLimit");
 
         ctrl.Perk?.StartingStatModifiers[0].ValueModifier = new Vector2(config.Value, config.Value);
     }
 
-    public CharacterPerk Perk { get; private set; }
-
-    public PerkCtrl(string uid)
-    {
-        Perk = UniqueIDScriptable.GetFromID<CharacterPerk>(uid);
-    }
+    public CharacterPerk Perk { get; private set; } = UniqueIDScriptable.GetFromID<CharacterPerk>(uid);
 }

@@ -1,0 +1,7 @@
+{
+    "ContainedPerksWarpData": [
+        "AddHandSlot:Pk_AddHandSlot",
+        "AddHandSlot:Pk_AddEncumbranceLimit"
+    ],
+    "ContainedPerksWarpType": 6
+}

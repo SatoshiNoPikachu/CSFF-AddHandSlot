@@ -14,17 +14,17 @@ public static class GameManagerPatch
         LineCtrl.ForceAddHandSlot();
         LineCtrl.ModifyHandSlotNum();
 
-        StatCtrl.ForceModifyEncumbranceLimit();
-        StatCtrl.ModifyEncumbranceLimit();
+        StatCtrl.ForceModifyEncumbranceLimit(true);
+        StatCtrl.Forced();
 
         InspectionPopupScroll.Create();
     }
 
     [HarmonyPostfix, HarmonyPatch("ChangeStatValue")]
-    public static IEnumerator ChangeStatValue_Postfix(IEnumerator result, InGameStat _Stat)
+    public static IEnumerator ChangeStatValue_Postfix(IEnumerator result, InGameStat _Stat, float _Value)
     {
         while (result.MoveNext()) yield return result.Current;
 
-        StatCtrl.OnStatValueChange(_Stat);
+        StatCtrl.OnStatValueChange(_Stat, _Value);
     }
 }

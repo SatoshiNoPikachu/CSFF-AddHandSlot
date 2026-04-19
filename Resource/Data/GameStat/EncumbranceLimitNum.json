@@ -12,8 +12,9 @@
         "r": 1.0
     },
     "BaseRatePerTick": 0.0,
-    "BaseValue": 4000.0,
+    "BaseValue": 0.0,
     "CannotBeInspected": false,
+    "CompositeStats": [],
     "DefaultStatusDescription": {
         "DefaultText": "",
         "LocalizationKey": "",
@@ -23,7 +24,7 @@
         "m_FileID": 0,
         "m_PathID": 0
     },
-    "DefaultStatusIconWarpData": "Weight",
+    "DefaultStatusIconWarpData": "Weight_Old",
     "DefaultStatusIconWarpType": 3,
     "DefaultStatusName": {
         "DefaultText": "",
@@ -53,14 +54,15 @@
         "ParentObjectID": ""
     },
     "InvertedDirection": false,
+    "IsRuntimeOnly": false,
     "MaxStalenessStack": 0,
     "MinMaxRate": {
         "x": 0.0,
         "y": 0.0
     },
     "MinMaxValue": {
-        "x": 1,
-        "y": 1000004000.0
+        "x": -3999.0,
+        "y": 1000000000.0
     },
     "NotEnoughIcon": {
         "m_FileID": 0,
@@ -73,12 +75,20 @@
     },
     "NoveltyCooldownDuration": 0,
     "OverrideFeedbackPrefab": {
+        "AnimationsToReset": "",
+        "Delay": 0.0,
+        "DestroyAfterPlaying": false,
+        "Duration": 0.0,
+        "Icon": "",
+        "ResetOnPlay": false,
+        "YieldWaitDuration": 0.0,
         "m_FileID": 0,
         "m_PathID": 0
     },
     "RequiredPerks": [],
-    "ShowActionEffects": true,
+    "ShowActionEffects": false,
     "StalenessMultiplier": 0.0,
+    "StatActions": [],
     "StatPriority": 0,
     "StatusDebugMode": false,
     "Statuses": [],
@@ -89,16 +99,17 @@
         "LocalizationKey": "",
         "ParentObjectID": ""
     },
+    "Transfers": [],
     "TrendIndicatorRateRange": {
         "x": 0.0,
         "y": 0.0
     },
-    "UniqueID": "AddHandSlot-EncumbranceLimitNum",
+    "UniqueID": "AddHandSlot:EncumbranceLimitNum",
     "UsesNovelty": false,
     "Visibility": 0,
     "VisibleInDetailedList": false,
     "VisibleValueRange": {
         "x": 0.0,
-        "y": 100.0
+        "y": 100000000.0
     }
 }
