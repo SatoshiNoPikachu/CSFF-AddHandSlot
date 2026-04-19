@@ -12,7 +12,7 @@ public class Plugin : BaseUnityPlugin<Plugin>
 {
     private const string PluginGuid = "Pikachu.CSFF.CardSizeReduce";
     public const string PluginName = "CardSizeReduce";
-    public const string PluginVersion = "3.2.0";
+    public const string PluginVersion = "3.3.0";
 
     private static readonly Harmony Harmony = new(PluginGuid);
 
